@@ -20,23 +20,32 @@
         add_action( 'admin_menu', array( $this, 'omb_add_metabox' ) );
     }
 
+    function omb_save_location($post_id){
+        $location = isset($_POST['omb_location']) ? $_POST['omb_location'] : '';
+        if ( $location == '') {
+            return $post_id;
+        }
+        update_post_meta( $post_id, 'omb_location', $location );
+        // add_post_meta( $post_id:integer, $meta_key:string, $meta_value:mixed, $unique:boolean )
+    }  
+
     function omb_add_metabox() {
         add_meta_box(
             'omb_post_location',
             __( 'Location Info', 'our-metabox' ),
             array( $this, 'omb_display_post_location' ),
             'post',
-            'side',
-            'high'
         );
     }
 
-    function omb_display_post_location() {
+    function omb_display_post_location($post) {
+        $location = get_post_meta($post->ID, 'omb_location', true);
+        //get_post_meta( $post_id:integer, $key:string, $single:boolean )
         $label = __( 'Location ', 'our-metabox' );
         $metabox_html = <<<EOD
             <p>
                 <label for="omb_location">{$label}</label>
-                <input type="text" name="omb_location" id="omb_location" />
+                <input type="text" name="omb_location" id="omb_location" value="{$location}" />
             </p>
         EOD;
 
