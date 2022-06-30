@@ -69,7 +69,7 @@
             'omb_post_location',
             __( 'Location Info', 'our-metabox' ),
             array( $this, 'omb_display_post_location' ),
-            'post',
+            array( 'post', 'page' )
         );
     }
 
