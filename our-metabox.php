@@ -80,10 +80,14 @@
         $country = get_post_meta($post->ID, 'omb_country', true);
         $is_favorite = get_post_meta($post->ID, 'omb_is_favorite', true);
         $checked = $is_favorite == 1 ? 'checked' : 
-        //get_post_meta( $post_id:integer, $key:string, $single:boolean )
+
         $label1 = __( 'Location ', 'our-metabox' );
         $label2 = __( 'Country ', 'our-metabox' );
         $label3 = __( 'Is favorite', 'our-metabox' );
+        $label4 = __( 'Colors', 'our-metabox' );
+
+        $colors = array( 'red', 'green', 'blue', 'yellow', 'black' );
+
         wp_nonce_field( 'omb_location', 'omb_location_field' );
         // wp_nonce_field( 'omb_country', 'omb_location_field' );
         $metabox_html = <<<EOD
@@ -99,11 +103,21 @@
             <label for="omb_is_favorite">{$label3}</label>
             <input type="checkbox" name="omb_is_favorite" id="omb_is_favorite" value="1" {$checked} />
         </p>
+        <p>
+            <label>{$label4}</label>
         EOD;
 
+        foreach ( $colors as $color ) {
+            $metabox_html .= <<<EOD
+            <label for="omb_clr_{$color}">{$color}</label>
+            <input type="checkbox" name="omb_clr[]" id="Omb_clr_{$color}" value="{$color}" />
+            EOD;
+        }
+
+        $metabox_html .= '</p>'; 
         echo $metabox_html;
     }
-    
+    // 4.46 mins
 
     function omb_load_textdomain(){
         load_plugin_textdomain( 'posts-to-qrcode', false, dirname(__FILE__) . "/languages" );
