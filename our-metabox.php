@@ -113,7 +113,7 @@
         EOD;
 
         foreach ( $colors as $color ) {
-            // $checked1 = in_array( $color, $saved_colors ) ? 'checked' : '';
+            $checked1 = in_array( $color, $saved_colors ) ? 'checked' : '';
             $metabox_html .= <<<EOD
             <label for="omb_clr_{$color}">{$color}</label>
             <input type="checkbox" name="omb_clr[]" id="omb_clr_{$color}" value="{$color}" {$checked1} />
@@ -128,7 +128,6 @@
     function omb_load_textdomain(){
         load_plugin_textdomain( 'posts-to-qrcode', false, dirname(__FILE__) . "/languages" );
     }
-    
  }
 
  new OurMetabox();
